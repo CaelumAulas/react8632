@@ -92,8 +92,11 @@
     <script src="js/lib/react.js"></script>
     <script src="js/lib/react-dom.js"></script>
 
+    <script src="js/lib/babel.js"></script>
+
     
-    <script type="module" src="js/app.js"></script>
+    <script src="js/components/Tweet.js" data-plugins="transform-es2015-modules-umd" data-presets="es2015, react"></script>
+    <script src="js/app.js" data-plugins="transform-es2015-modules-umd" data-presets="es2015, react"></script>
 </body>
 
 </html>

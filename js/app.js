@@ -6,4 +6,5 @@ const listaTweets = [
     Tweet('oi'),
     Tweet('tchau')
 ]
+
 ReactDOM.render(listaTweets, tweetsArea)
