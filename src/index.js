@@ -1,11 +1,9 @@
+import React from 'react'
 import ReactDOM from 'react-dom'
-import { Tweet } from './components/Tweet/Tweet'
 
-const tweetsArea = document.querySelector('.tweetsArea')
+import { Home } from './pages/Home/Home.jsx'
 
-const listaTweets = [
-    Tweet('oi'),
-    Tweet('tchau')
-]
-
-ReactDOM.render(listaTweets, tweetsArea)
+ReactDOM.render(
+    <Home />, 
+    document.querySelector('body')
+)

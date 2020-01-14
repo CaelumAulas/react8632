@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "_build:react": "react-scripts build",
+    "build": "npm run _build:react"
   },
   "browserslist": {
     "production": [
