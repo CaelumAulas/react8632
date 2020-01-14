@@ -1,4 +1,5 @@
-import { Tweet } from './components/Tweet.js'
+import ReactDOM from 'react-dom'
+import { Tweet } from './components/Tweet/Tweet'
 
 const tweetsArea = document.querySelector('.tweetsArea')
 
