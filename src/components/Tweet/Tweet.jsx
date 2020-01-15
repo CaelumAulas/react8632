@@ -2,7 +2,7 @@ import React from 'react'
 
 import './tweet.css'
 
-function TweetCabecalho({ nomeCompletoUsuario, nomeUsuario }) {
+export function TweetCabecalho({ nomeCompletoUsuario, nomeUsuario }) {
     return (
         <div className="tweet__cabecalho">
             <img className="tweet__fotoUsuario" src="https://placehold.it/50x50" alt="" />

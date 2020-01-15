@@ -3,11 +3,13 @@
   float: left;
   width: 30%;
 }
+
 @media (max-width: 610px) {
   .dashboard {
     width: 100%;
   }
 }
+
 @media (min-width: 611px) {
   .dashboard__centro {
     width: calc(70% - 15px);

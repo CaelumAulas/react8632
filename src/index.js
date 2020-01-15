@@ -5,5 +5,5 @@ import { Home } from './pages/Home/Home.jsx'
 
 ReactDOM.render(
     <Home />, 
-    document.querySelector('body')
+    document.querySelector('#raiz')
 )
