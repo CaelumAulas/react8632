@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { Home } from './pages/Home/Home.jsx'
+import { App } from './App.jsx'
 
 ReactDOM.render(
-    <Home />, 
+    <App />, 
     document.querySelector('#raiz')
 )

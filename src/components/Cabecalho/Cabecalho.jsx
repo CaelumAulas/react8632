@@ -9,6 +9,7 @@ function Cabecalho(props) {
                     <a href="/">Twitelum</a>
                 </h1>
                 { props.children }
+
             </div>
         </header>
     )
