@@ -9,40 +9,52 @@ import {
     TrendsArea 
 } from '../../components/index.js'
 
-export function Home() {
-    const infoTweet1 = {
-        conteudo: 'oi', 
+const listaInicialFake = [
+    {
+        conteudo: 'alo alo', 
         nomeCompletoUsuario: "Artur Diniz", 
         nomeUsuario: "artdiniz", 
-        qtLikes: 0
-    }
-    
-    const infoTweet2 = {
-        conteudo: 'tchau', 
+        qtLikes: 0,
+        id: 5
+    },
+    {
+        conteudo: 'vamo logar', 
         nomeCompletoUsuario: "Artur Adam", 
         nomeUsuario: "artadam", 
-        qtLikes: 2
+        qtLikes: 2,
+        id: 7
     }
-    
-    const listaTweets = [
-        React.createElement(
-            Tweet, 
-            {...infoTweet1, key: 1}, 
-            [ 
-                "alo alo"
-            ]
-        ),
-        <Tweet { ...infoTweet2 } key="2">
-            { infoTweet2.conteudo }
-        </Tweet>
-    ]
+]
 
-    const [ valorTamanhoTweetNovo, setTamanhoTweetNovo ] = useState(0)
+export function Home() {
+    const [ textoTweetNovo, setTextoTweetNovo ] = useState("")
+    
+    const [ listaTweets, setListaTweets ] = useState(listaInicialFake)
+
+    function onSubmitFormulario(eventoSubmit) {
+        eventoSubmit.preventDefault()
+        const novoTweet = {
+            conteudo: textoTweetNovo, 
+            nomeCompletoUsuario: "Artur Adam", 
+            nomeUsuario: "artadam", 
+            qtLikes: 2,
+            id: 7
+        }
+
+        setListaTweets( [ novoTweet, ...listaTweets ] )
+    }
+
 
     function onChangeTextarea(evento) {
-        const novoTamanho = evento.target.value.length
-        setTamanhoTweetNovo(novoTamanho)
+        const novoTweet = evento.target.value
+        setTextoTweetNovo(novoTweet)
     }
+
+    const isInvalido = textoTweetNovo.length > 140
+
+    const classeStatusTweet = (isInvalido)
+        ? "novoTweet__status novoTweet__status--invalido"
+        : "novoTweet__status"
 
     return (
         <div>
@@ -53,17 +65,20 @@ export function Home() {
             <div className="container">
                 <Dashboard>
                     <Widget>
-                        <form className="novoTweet">
+                        <form onSubmit={ onSubmitFormulario } className="novoTweet">
                             <div className="novoTweet__editorArea">
-                                <span className="novoTweet__status">{ valorTamanhoTweetNovo }/140</span>
+                                <span className={ classeStatusTweet }>
+                                    { textoTweetNovo.length }/140
+                                </span>
                                 <textarea 
+                                    id="novoTweet"
                                     onChange={ onChangeTextarea }  
                                     className="novoTweet__editor" 
                                     placeholder="O que está acontecendo?"
                                 >
                                 </textarea>
                             </div>
-                            <button type="submit" className="novoTweet__envia">Tweetar</button>
+                            <button disabled={ isInvalido } type="submit" className="novoTweet__envia">Tweetar</button>
                         </form>
                     </Widget>
                     <Widget>
@@ -74,7 +89,13 @@ export function Home() {
                 <Dashboard posicao="centro">
                     <Widget>
                         <div className="tweetsArea">
-                            { listaTweets }
+
+                            {listaTweets.map(infoTweet => 
+                                <Tweet { ...infoTweet } key={infoTweet.id}>
+                                    { infoTweet.conteudo }
+                                </Tweet>
+                            )}
+
                         </div>
                     </Widget>
                 </Dashboard>
