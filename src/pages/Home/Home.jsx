@@ -1,5 +1,13 @@
-import React from 'react'
-import { Tweet, Cabecalho, NavMenu, Dashboard, Widget, TrendsArea } from '../../components/index.js'
+// Hook
+import React, { useState } from 'react'
+import { 
+    Tweet, 
+    Cabecalho, 
+    NavMenu, 
+    Dashboard, 
+    Widget, 
+    TrendsArea 
+} from '../../components/index.js'
 
 export function Home() {
     const infoTweet1 = {
@@ -29,6 +37,13 @@ export function Home() {
         </Tweet>
     ]
 
+    const [ valorTamanhoTweetNovo, setTamanhoTweetNovo ] = useState(0)
+
+    function onChangeTextarea(evento) {
+        const novoTamanho = evento.target.value.length
+        setTamanhoTweetNovo(novoTamanho)
+    }
+
     return (
         <div>
             <Cabecalho>
@@ -40,8 +55,13 @@ export function Home() {
                     <Widget>
                         <form className="novoTweet">
                             <div className="novoTweet__editorArea">
-                                <span className="novoTweet__status">0/140</span>
-                                <textarea className="novoTweet__editor" placeholder="O que está acontecendo?"></textarea>
+                                <span className="novoTweet__status">{ valorTamanhoTweetNovo }/140</span>
+                                <textarea 
+                                    onChange={ onChangeTextarea }  
+                                    className="novoTweet__editor" 
+                                    placeholder="O que está acontecendo?"
+                                >
+                                </textarea>
                             </div>
                             <button type="submit" className="novoTweet__envia">Tweetar</button>
                         </form>
