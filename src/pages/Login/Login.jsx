@@ -1,9 +1,11 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import { Cabecalho } from '../../components/Cabecalho/Cabecalho.jsx'
 import { Widget } from '../../components/Widget/Widget.jsx'
 import { ComponenteAutenticado } from '../../components/ComponenteAutenticado/ComponenteAutenticado.jsx'
 
 import * as AutenticarService from '../../model/services/AutenticarService.js'
+
+import { Contexto as NotificacaoContexto } from '../../components/Notificacao/Notificacao.jsx'
 
 import './loginPage.css'
 
@@ -15,6 +17,8 @@ function Login() {
         AutenticarService.isAutenticado()
     )
 
+    const { setMsg } = useContext(NotificacaoContexto)
+
     function onSubmitForm(eventoSubmit) {
         eventoSubmit.preventDefault()
         // TODO Revisando validacao
@@ -25,6 +29,7 @@ function Login() {
         AutenticarService.autenticar(usuario, senha)
             .then(() => {
                 setIsLogado(true)
+                setMsg("Logado com sucesso")
             })
             .catch((erro) => {
                 setMsgErro(erro.message)

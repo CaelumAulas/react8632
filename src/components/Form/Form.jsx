@@ -3,9 +3,10 @@ import React, { useState } from 'react'
 import './novoTweet.css'
 
 export function Form(props) {
-    const [ textoTweetNovo, setTextoTweetNovo ] = useState("")
-
     const { adicionaTweet } = props
+
+
+    const [ textoTweetNovo, setTextoTweetNovo ] = useState("")
 
     function onSubmitFormulario(eventoSubmit) {
         eventoSubmit.preventDefault()

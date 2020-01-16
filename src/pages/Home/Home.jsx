@@ -1,5 +1,5 @@
 // Hook
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect, useContext} from 'react'
 import { 
     Tweet, 
     Cabecalho, 
@@ -14,6 +14,8 @@ import {
 import * as AutenticarService from '../../model/services/AutenticarService.js'
 import * as TweetsService from '../../model/services/TweetsService.js'
 
+import { Contexto as NotificacaoContexto } from '../../components/Notificacao/Notificacao.jsx'
+
 function converteTweet(tweet) {
     return {
         nomeUsuario: tweet.usuario.login,
@@ -27,6 +29,8 @@ function converteTweet(tweet) {
 export function HomeSemAutenticacao() {
     const [ listaTweets, setListaTweets ] = useState([])
 
+    const { setMsg } = useContext(NotificacaoContexto)
+
     useEffect(() => {
         TweetsService.carrega()
             .then(listaServidor => {
@@ -36,6 +40,12 @@ export function HomeSemAutenticacao() {
                 ])
             })
     }, [])
+
+    useEffect(() => {
+        setTimeout(() => {
+            setMsg("")
+        }, 5000)
+    })
 
     // Função Closure
     // Prop de callback
