@@ -1,9 +1,8 @@
 import React, { Fragment, useState } from 'react'
 import { Cabecalho } from '../../components/Cabecalho/Cabecalho.jsx'
 import { Widget } from '../../components/Widget/Widget.jsx'
+import { ComponenteAutenticado } from '../../components/ComponenteAutenticado/ComponenteAutenticado.jsx'
 
-
-import { Redirect } from 'react-router-dom'
 import * as AutenticarService from '../../model/services/AutenticarService.js'
 
 import './loginPage.css'
@@ -68,11 +67,10 @@ function Login() {
     )
 
     return (
-        (!isLogado)
-            ? pagina
-            : <Redirect to="/" />
+        <ComponenteAutenticado podeExibir={!isLogado} redirecionarPara="/" >
+            { pagina }
+        </ComponenteAutenticado>
     )
 }
-
 
 export {Login}

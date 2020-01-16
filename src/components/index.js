@@ -4,3 +4,5 @@ export { Dashboard } from './Dashboard/Dashboard.jsx'
 export { Widget } from './Widget/Widget.jsx'
 export { TrendsArea } from './TrendsArea/TrendsArea.jsx'
 export { Tweet } from './Tweet/Tweet.jsx'
+
+export { ComponenteAutenticado } from './ComponenteAutenticado/ComponenteAutenticado.jsx'

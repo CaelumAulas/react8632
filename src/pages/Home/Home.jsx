@@ -6,8 +6,12 @@ import {
     NavMenu, 
     Dashboard, 
     Widget, 
-    TrendsArea 
+    TrendsArea,
+    ComponenteAutenticado
+
 } from '../../components/index.js'
+
+import * as AutenticarService from '../../model/services/AutenticarService.js'
 
 const listaInicialFake = [
     {
@@ -26,7 +30,7 @@ const listaInicialFake = [
     }
 ]
 
-export function Home() {
+function HomeSemAutenticacao() {
     const [ textoTweetNovo, setTextoTweetNovo ] = useState("")
     
     const [ listaTweets, setListaTweets ] = useState(listaInicialFake)
@@ -101,5 +105,16 @@ export function Home() {
                 </Dashboard>
             </div>
         </div>
+    )
+}
+
+
+export function Home(props) {
+    const isLogado = AutenticarService.isAutenticado()
+
+    return (
+        <ComponenteAutenticado podeExibir={isLogado} redirecionarPara="/login" >
+            <HomeSemAutenticacao {...props}/>
+        </ComponenteAutenticado>
     )
 }
