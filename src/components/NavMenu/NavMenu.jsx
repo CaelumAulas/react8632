@@ -26,6 +26,7 @@ function NavMenu(props) {
         <li className={navMenuStyles.navMenu__item}>
           <a className={navMenuStyles.navMenu__link} href="/logout">
             Logout
+            {/* TODO roteamento e deslogamento */}
           </a>
         </li>
       </ul>
