@@ -1,5 +1,5 @@
 // Hook
-import React, { useState } from 'react'
+import React, { useState, useEffect} from 'react'
 import { 
     Tweet, 
     Cabecalho, 
@@ -27,13 +27,15 @@ function converteTweet(tweet) {
 export function HomeSemAutenticacao() {
     const [ listaTweets, setListaTweets ] = useState([])
 
-    TweetsService.carrega()
-        .then(listaServidor => {
-            setListaTweets([
-                ...listaServidor.map(converteTweet), 
-                ...listaTweets
-            ])
-        })
+    useEffect(() => {
+        TweetsService.carrega()
+            .then(listaServidor => {
+                setListaTweets([
+                    ...listaServidor.map(converteTweet), 
+                    ...listaTweets
+                ])
+            })
+    }, [])
 
     // Função Closure
     // Prop de callback
