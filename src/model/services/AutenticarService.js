@@ -2,6 +2,12 @@
 //  Webpack
 const URL_API = process.env.REACT_APP_URL_API
 
+
+export function getToken() {
+    // Login inocente
+    return localStorage.getItem('TOKEN')
+}
+
 export function isAutenticado() {
     // Login inocente
     return localStorage.getItem('TOKEN') !== null
