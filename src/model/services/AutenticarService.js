@@ -13,6 +13,10 @@ export function isAutenticado() {
     return localStorage.getItem('TOKEN') !== null
 }
 
+export async function desautenticar() {
+    localStorage.removeItem('TOKEN')
+}
+
 export async function autenticar(usuario, senha) {
     const response = await fetch(URL_API + '/login', {
         method: "POST",
