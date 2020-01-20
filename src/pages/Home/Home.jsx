@@ -25,7 +25,6 @@ function converteTweet(tweet) {
     }
 }
 
-// TODO usar o Componente Autenticado
 export function HomeSemAutenticacao() {
     const [ listaTweets, setListaTweets ] = useState([])
 
