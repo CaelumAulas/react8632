@@ -23,6 +23,7 @@ function converteTweet(tweet) {
         nomeCompletoUsuario: tweet.usuario.nome,
         qtLikes: tweet.totalLikes,
         conteudo: tweet.conteudo,
+        likeado: false,
         id: tweet._id
     }
 }
@@ -58,6 +59,21 @@ export function HomeSemAutenticacao() {
         setTweetModal(null)
     }
 
+    // Problema: Lógica de gerenciamento de estado no Componente
+    function dahLike(idTweetLikeado) {
+        const tweetLikeado = listaTweets.find(({id}) => id === idTweetLikeado)
+
+        if (tweetLikeado.likeado) {
+            tweetLikeado.likeado = false
+            tweetLikeado.qtLikes = tweetLikeado.qtLikes - 1 
+        } else {
+            tweetLikeado.likeado = true
+            tweetLikeado.qtLikes = tweetLikeado.qtLikes + 1 
+        }
+
+        setListaTweets([...listaTweets])
+    }
+
     function adicionaTweet(textoTweetNovo) {
         TweetsService.adiciona(textoTweetNovo)
             .then(novoTweet => {
@@ -89,7 +105,7 @@ export function HomeSemAutenticacao() {
                         <div className="tweetsArea">
 
                             {listaTweets.map(infoTweet => 
-                                <Tweet { ...infoTweet } key={infoTweet.id} onConteudoClicado={() => abreModal(infoTweet)}>
+                                <Tweet { ...infoTweet } key={infoTweet.id} onConteudoClicado={() => abreModal(infoTweet)} onLike={() => dahLike(infoTweet.id)}>
                                     { infoTweet.conteudo }
                                 </Tweet>
                             )}
@@ -102,7 +118,7 @@ export function HomeSemAutenticacao() {
             {tweetModal !== null
                 ? (
                     <Modal onFechando={fechaModal}>
-                        <Tweet {...tweetModal}>
+                        <Tweet {...tweetModal} onLike={() => dahLike(tweetModal.id)}>
                             {tweetModal.conteudo} 
                         </Tweet>
                     </Modal>

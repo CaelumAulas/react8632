@@ -12,11 +12,11 @@ export function TweetCabecalho({ nomeCompletoUsuario, nomeUsuario }) {
     )
 }
 
-function TweetFooter({ qtLikes }) {
+function TweetFooter({ qtLikes, likeado, onLike }) {
     return (
         <footer className="tweet__footer">
-            <button className="btn btn--clean">
-                <svg className="icon icon--small iconHeart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47.5 47.5">
+            <button className="btn btn--clean" onClick={ onLike }>
+                <svg className={'icon icon--small iconHeart' + (likeado ? ' iconHeart--active' : '')} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47.5 47.5">
                     <defs>
                         <clipPath id="a">
                             <path d="M0 38h38V0H0v38z"></path>
@@ -46,7 +46,8 @@ export function Tweet(props) {
 
             <p onClick={props.onConteudoClicado} className="tweet__conteudo">{ conteudo }</p>
 
-            <TweetFooter qtLikes={props.qtLikes} />
+            {/*Problema: prop drilling, passando o onLike para o TweetFooter */}
+            <TweetFooter qtLikes={props.qtLikes} likeado={props.likeado} onLike= { props.onLike } />
 
         </article>
     )
