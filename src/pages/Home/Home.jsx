@@ -17,29 +17,24 @@ import * as TweetsService from '../../model/services/TweetsService.js'
 
 import { Contexto as NotificacaoContexto } from '../../components/Notificacao/Notificacao.jsx'
 
-function converteTweet(tweet) {
-    return {
-        nomeUsuario: tweet.usuario.login,
-        nomeCompletoUsuario: tweet.usuario.nome,
-        qtLikes: tweet.totalLikes,
-        conteudo: tweet.conteudo,
-        likeado: false,
-        id: tweet._id
-    }
-}
+import { store } from '../../store.js'
 
 export function HomeSemAutenticacao() {
     const [ listaTweets, setListaTweets ] = useState([])
 
     const { setMsg } = useContext(NotificacaoContexto)
 
+    store.subscribe(() => {
+        setListaTweets(store.getState().listaTweets)
+    })
+
     useEffect(() => {
         TweetsService.carrega()
             .then(listaServidor => {
-                setListaTweets([
-                    ...listaServidor.map(converteTweet), 
-                    ...listaTweets
-                ])
+                store.dispatch({
+                    type: "LISTA",
+                    lista: listaServidor
+                })
             })
     }, [])
 
@@ -59,28 +54,13 @@ export function HomeSemAutenticacao() {
         setTweetModal(null)
     }
 
-    // Problema: Lógica de gerenciamento de estado no Componente
-    function dahLike(idTweetLikeado) {
-        const tweetLikeado = listaTweets.find(({id}) => id === idTweetLikeado)
-
-        if (tweetLikeado.likeado) {
-            tweetLikeado.likeado = false
-            tweetLikeado.qtLikes = tweetLikeado.qtLikes - 1 
-        } else {
-            tweetLikeado.likeado = true
-            tweetLikeado.qtLikes = tweetLikeado.qtLikes + 1 
-        }
-
-        setListaTweets([...listaTweets])
-    }
-
     function adicionaTweet(textoTweetNovo) {
         TweetsService.adiciona(textoTweetNovo)
             .then(novoTweet => {
-                setListaTweets([ 
-                    converteTweet(novoTweet), 
-                    ...listaTweets 
-                ])
+                store.dispatch({
+                    type: "ADICIONA",
+                    tweet: novoTweet
+                })
             })
     }
 
@@ -105,7 +85,7 @@ export function HomeSemAutenticacao() {
                         <div className="tweetsArea">
 
                             {listaTweets.map(infoTweet => 
-                                <Tweet { ...infoTweet } key={infoTweet.id} onConteudoClicado={() => abreModal(infoTweet)} onLike={() => dahLike(infoTweet.id)}>
+                                <Tweet { ...infoTweet } key={infoTweet.id} onConteudoClicado={() => abreModal(infoTweet)} >
                                     { infoTweet.conteudo }
                                 </Tweet>
                             )}
@@ -118,7 +98,7 @@ export function HomeSemAutenticacao() {
             {tweetModal !== null
                 ? (
                     <Modal onFechando={fechaModal}>
-                        <Tweet {...tweetModal} onLike={() => dahLike(tweetModal.id)}>
+                        <Tweet {...tweetModal} >
                             {tweetModal.conteudo} 
                         </Tweet>
                     </Modal>

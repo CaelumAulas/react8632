@@ -2,6 +2,8 @@ import React from 'react'
 
 import './tweet.css'
 
+import { store } from '../../store.js'
+
 export function TweetCabecalho({ nomeCompletoUsuario, nomeUsuario }) {
     return (
         <div className="tweet__cabecalho">
@@ -12,7 +14,7 @@ export function TweetCabecalho({ nomeCompletoUsuario, nomeUsuario }) {
     )
 }
 
-function TweetFooter({ qtLikes, likeado, onLike }) {
+function TweetFooter({ qtLikes, likeado, onLike}) {
     return (
         <footer className="tweet__footer">
             <button className="btn btn--clean" onClick={ onLike }>
@@ -36,6 +38,10 @@ function TweetFooter({ qtLikes, likeado, onLike }) {
 export function Tweet(props) {
     
     const conteudo = props.children
+
+    function dahLike() {
+        store.dispatch({type: "LIKE", id: props.id})
+    }
     
     return (
         <article className="tweet">
@@ -47,7 +53,7 @@ export function Tweet(props) {
             <p onClick={props.onConteudoClicado} className="tweet__conteudo">{ conteudo }</p>
 
             {/*Problema: prop drilling, passando o onLike para o TweetFooter */}
-            <TweetFooter qtLikes={props.qtLikes} likeado={props.likeado} onLike= { props.onLike } />
+            <TweetFooter qtLikes={props.qtLikes} likeado={props.likeado} onLike={ dahLike }/>
 
         </article>
     )
