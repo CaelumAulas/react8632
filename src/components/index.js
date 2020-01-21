@@ -7,3 +7,6 @@ export { Tweet } from './Tweet/Tweet.jsx'
 export { ComponenteAutenticado } from './ComponenteAutenticado/ComponenteAutenticado.jsx'
 export { Form } from './Form/Form.jsx'
 export { Modal } from './Modal/Modal.jsx'
+
+export { Notificacao } from './Notificacao/Notificacao.jsx'
+export * from './ReduxStoreProvider/ReduxStoreProvider.jsx'

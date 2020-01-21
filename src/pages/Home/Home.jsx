@@ -1,5 +1,5 @@
 // Hook
-import React, { useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { 
     Tweet, 
     Cabecalho, 
@@ -16,7 +16,7 @@ import * as AutenticarService from '../../model/services/AutenticarService.js'
 
 import { Contexto as NotificacaoContexto } from '../../components/Notificacao/Notificacao.jsx'
 
-import { store } from  '../../store.js'
+import { StoreContexto } from  '../../components/index.js'
 
 import { criaAcaoAdicionarServidor, criaAcaoCarregarServidor } from '../../ducks/listaTweets.js'
 
@@ -24,6 +24,8 @@ export function HomeSemAutenticacao() {
     const [ listaTweets, setListaTweets ] = useState([])
 
     const { setMsg } = useContext(NotificacaoContexto)
+
+    const { store } = useContext(StoreContexto)
 
     store.subscribe(() => {
         setListaTweets(store.getState().listaTweets)

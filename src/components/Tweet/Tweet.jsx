@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import './tweet.css'
 
-import { store } from '../../store.js'
 import { criaAcaoLike } from '../../ducks/listaTweets.js'
+
+import { StoreContexto } from  '../../components/index.js'
 
 export function TweetCabecalho({ nomeCompletoUsuario, nomeUsuario }) {
     return (
@@ -37,6 +38,8 @@ function TweetFooter({ qtLikes, likeado, onLike}) {
 
 // Componente Tweet
 export function Tweet(props) {
+
+    const { store } = useContext(StoreContexto)
     
     const conteudo = props.children
 
