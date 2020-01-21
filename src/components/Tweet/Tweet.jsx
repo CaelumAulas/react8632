@@ -2,7 +2,8 @@ import React from 'react'
 
 import './tweet.css'
 
-import { store, criaAcaoLike } from '../../store.js'
+import { store } from '../../store.js'
+import { criaAcaoLike } from '../../ducks/listaTweets.js'
 
 export function TweetCabecalho({ nomeCompletoUsuario, nomeUsuario }) {
     return (

@@ -16,7 +16,9 @@ import * as AutenticarService from '../../model/services/AutenticarService.js'
 
 import { Contexto as NotificacaoContexto } from '../../components/Notificacao/Notificacao.jsx'
 
-import { store, criaAcaoAdicionarServidor, criaAcaoCarregarServidor } from '../../store.js'
+import { store } from  '../../store.js'
+
+import { criaAcaoAdicionarServidor, criaAcaoCarregarServidor } from '../../ducks/listaTweets.js'
 
 export function HomeSemAutenticacao() {
     const [ listaTweets, setListaTweets ] = useState([])
