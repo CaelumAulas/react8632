@@ -2,7 +2,7 @@ import React from 'react'
 
 import './tweet.css'
 
-import { store } from '../../store.js'
+import { store, criaAcaoLike } from '../../store.js'
 
 export function TweetCabecalho({ nomeCompletoUsuario, nomeUsuario }) {
     return (
@@ -40,7 +40,7 @@ export function Tweet(props) {
     const conteudo = props.children
 
     function dahLike() {
-        store.dispatch({type: "LIKE", id: props.id})
+        store.dispatch(criaAcaoLike(props.id))
     }
     
     return (

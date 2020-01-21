@@ -48,3 +48,26 @@ export const store = createStore(function reducer(estado = ESTADO_INICIAL, acao)
 
     return estado
 })
+
+
+// Action Creators
+export const criaAcaoLista = (tweets) => {
+    return {
+        type: "LISTA",
+        lista: tweets
+    }
+}
+
+export const criaAcaoLike = (id) => {
+    return {
+        type: "LIKE", 
+        id: id
+    }
+}
+
+export const criaAcaoAdiciona = (tweet) => {
+    return {
+        type: "ADICIONA", 
+        tweet: tweet
+    }
+}
