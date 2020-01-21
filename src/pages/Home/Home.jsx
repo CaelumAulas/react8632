@@ -13,11 +13,10 @@ import {
 } from '../../components/index.js'
 
 import * as AutenticarService from '../../model/services/AutenticarService.js'
-import * as TweetsService from '../../model/services/TweetsService.js'
 
 import { Contexto as NotificacaoContexto } from '../../components/Notificacao/Notificacao.jsx'
 
-import { store, criaAcaoAdiciona, criaAcaoLista } from '../../store.js'
+import { store, criaAcaoAdicionarServidor, criaAcaoCarregarServidor } from '../../store.js'
 
 export function HomeSemAutenticacao() {
     const [ listaTweets, setListaTweets ] = useState([])
@@ -29,10 +28,7 @@ export function HomeSemAutenticacao() {
     })
 
     useEffect(() => {
-        TweetsService.carrega()
-            .then(listaServidor => {
-                store.dispatch(criaAcaoLista(listaServidor))
-            })
+        store.dispatch(criaAcaoCarregarServidor())
     }, [])
 
     useEffect(() => {
@@ -52,10 +48,7 @@ export function HomeSemAutenticacao() {
     }
 
     function adicionaTweet(textoTweetNovo) {
-        TweetsService.adiciona(textoTweetNovo)
-            .then(novoTweet => {
-                store.dispatch(criaAcaoAdiciona(novoTweet))
-            })
+        store.dispatch(criaAcaoAdicionarServidor(textoTweetNovo))
     }
 
     return (

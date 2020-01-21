@@ -1,4 +1,8 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+
+import thunkMiddleware from 'redux-thunk'
+
+import * as TweetsService from './model/services/TweetsService.js'
 
 const ESTADO_INICIAL = { listaTweets: [] }
 
@@ -13,7 +17,14 @@ function converteTweet(tweet) {
     }
 }
 
-export const store = createStore(function reducer(estado = ESTADO_INICIAL, acao) {
+export const store = createStore(
+    reducer,
+    applyMiddleware(
+        thunkMiddleware
+    )
+)
+
+function reducer(estado = ESTADO_INICIAL, acao) {
 
     if (acao.type === "LISTA") {
         return {
@@ -47,7 +58,7 @@ export const store = createStore(function reducer(estado = ESTADO_INICIAL, acao)
     }
 
     return estado
-})
+}
 
 
 // Action Creators
@@ -69,5 +80,27 @@ export const criaAcaoAdiciona = (tweet) => {
     return {
         type: "ADICIONA", 
         tweet: tweet
+    }
+}
+
+//Thunk Action Creator
+export const criaAcaoAdicionarServidor = (textoTweetNovo) => {
+    return (dispatch) => {
+        TweetsService
+            .adiciona(textoTweetNovo)
+            .then(novoTweet => {
+                dispatch(criaAcaoAdiciona(novoTweet))
+            })
+    }
+}
+
+//Thunk Action Creator
+export const criaAcaoCarregarServidor = () => {
+    return (dispatch) => {
+        TweetsService
+            .carrega()
+            .then((listaServidor) => {
+                dispatch(criaAcaoLista(listaServidor))
+            })
     }
 }
