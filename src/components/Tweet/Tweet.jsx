@@ -44,7 +44,7 @@ export function Tweet(props) {
                 nomeUsuario={props.nomeUsuario} 
             />
 
-            <p className="tweet__conteudo">{ conteudo }</p>
+            <p onClick={props.onConteudoClicado} className="tweet__conteudo">{ conteudo }</p>
 
             <TweetFooter qtLikes={props.qtLikes} />
 

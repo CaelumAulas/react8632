@@ -8,7 +8,8 @@ import {
     Widget, 
     TrendsArea,
     ComponenteAutenticado,
-    Form
+    Form,
+    Modal
 } from '../../components/index.js'
 
 import * as AutenticarService from '../../model/services/AutenticarService.js'
@@ -21,7 +22,8 @@ function converteTweet(tweet) {
         nomeUsuario: tweet.usuario.login,
         nomeCompletoUsuario: tweet.usuario.nome,
         qtLikes: tweet.totalLikes,
-        conteudo: tweet.conteudo
+        conteudo: tweet.conteudo,
+        id: tweet._id
     }
 }
 
@@ -46,9 +48,16 @@ export function HomeSemAutenticacao() {
         }, 5000)
     })
 
-    // Função Closure
-    // Prop de callback
-    // Adicionar Tweets no servidor
+    const [tweetModal, setTweetModal] = useState(null)
+
+    function abreModal(tweet) {
+        setTweetModal(tweet)
+    }
+
+    function fechaModal() {
+        setTweetModal(null)
+    }
+
     function adicionaTweet(textoTweetNovo) {
         TweetsService.adiciona(textoTweetNovo)
             .then(novoTweet => {
@@ -80,7 +89,7 @@ export function HomeSemAutenticacao() {
                         <div className="tweetsArea">
 
                             {listaTweets.map(infoTweet => 
-                                <Tweet { ...infoTweet } key={infoTweet.id}>
+                                <Tweet { ...infoTweet } key={infoTweet.id} onConteudoClicado={() => abreModal(infoTweet)}>
                                     { infoTweet.conteudo }
                                 </Tweet>
                             )}
@@ -89,6 +98,18 @@ export function HomeSemAutenticacao() {
                     </Widget>
                 </Dashboard>
             </div>
+
+            {tweetModal !== null
+                ? (
+                    <Modal onFechando={fechaModal}>
+                        <Tweet {...tweetModal}>
+                            {tweetModal.conteudo} 
+                        </Tweet>
+                    </Modal>
+                )
+                : ''
+            }
+
         </div>
     )
 }
