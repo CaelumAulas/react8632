@@ -1,6 +1,6 @@
 import React, { useState, createContext } from 'react'
 
-export const Contexto = createContext({
+export const NotificacaoContext = createContext({
     setMsg: () => {}
 })
 
@@ -10,7 +10,7 @@ export function Notificacao(props) {
     const [ msg, setMsg ] = useState("")
 
     return (
-        <Contexto.Provider 
+        <NotificacaoContext.Provider 
             value={ {setMsg: setMsg}  }
         >
             { conteudo }
@@ -18,6 +18,6 @@ export function Notificacao(props) {
                 ? <div className="notificacaoMsg"> { msg } </div>
                 : ''
             }
-        </Contexto.Provider>
+        </NotificacaoContext.Provider>
     )
 }

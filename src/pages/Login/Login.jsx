@@ -5,21 +5,37 @@ import { ComponenteAutenticado } from '../../components/ComponenteAutenticado/Co
 
 import * as AutenticarService from '../../model/services/AutenticarService.js'
 
-import { Contexto as NotificacaoContexto } from '../../components/Notificacao/Notificacao.jsx'
+import { NotificacaoContext } from '../../components/Notificacao/Notificacao.jsx'
 
 import './loginPage.css'
 
-function Login() {
+class Login extends React.Component{
 
-    const [ msgErro, setMsgErro ] = useState("")
+    static contextType = NotificacaoContext
 
-    const [ isLogado, setIsLogado ] = useState(
-        AutenticarService.isAutenticado()
-    )
+    constructor(props, context){
+        super(props, context)
+        this.state = {
+            msgErro: '',
+            isLogado: AutenticarService.isAutenticado()
+        }
 
-    const { setMsg } = useContext(NotificacaoContexto)
+        this.onSubmitForm = this.onSubmitForm.bind(this)
+    }
 
-    function onSubmitForm(eventoSubmit) {
+    setMsgErro(value){
+        this.setState({
+            msgErro: value
+        })
+    }
+
+    setIsLogado(value){
+        this.setState({
+            isLogado: value
+        })
+    }
+
+    onSubmitForm(eventoSubmit) {
         eventoSubmit.preventDefault()
         // TODO Revisando validacao
 
@@ -28,54 +44,57 @@ function Login() {
 
         AutenticarService.autenticar(usuario, senha)
             .then(() => {
-                setIsLogado(true)
-                setMsg("Logado com sucesso")
+                this.setIsLogado(true)
+                this.context.setMsg("Logado com sucesso")
             })
             .catch((erro) => {
-                setMsgErro(erro.message)
+                this.setMsgErro(erro.message)
             })
 
     }
 
-    const pagina = (
-        <Fragment>
-            <Cabecalho />
-            <div className="loginPage">
-                <div className="container">
-                    <Widget>
-                        <h2 className="loginPage__title">Seja bem vindo!</h2>
-                        <form onSubmit={ onSubmitForm } className="loginPage__form" action="/">
-                            <div className="loginPage__inputWrap">
-                                <label className="loginPage__label" htmlFor="login">Login</label> 
-                                <input className="loginPage__input" type="text" id="login" name="login"/>
-                            </div>
-                            <div className="loginPage__inputWrap">
-                                <label className="loginPage__label" htmlFor="senha">Senha</label> 
-                                <input className="loginPage__input" type="password" id="senha" name="senha"/>
-                            </div>
-                            {(msgErro.length > 0)
-                                ? <div className="loginPage__errorBox">
-                                    { msgErro }
-                                  </div>
-                                : ''
-                            }
-                            <div className="loginPage__inputWrap">
-                                <button className="loginPage__btnLogin" type="submit">
-                                    Logar
-                                </button>
-                            </div>
-                        </form>
-                    </Widget>
+    render() {
+        const pagina = (
+            <Fragment>
+                <Cabecalho />
+                <div className="loginPage">
+                    <div className="container">
+                        <Widget>
+                            <h2 className="loginPage__title">Seja bem vindo!</h2>
+                            <form onSubmit={ this.onSubmitForm } className="loginPage__form" action="/">
+                                <div className="loginPage__inputWrap">
+                                    <label className="loginPage__label" htmlFor="login">Login</label> 
+                                    <input className="loginPage__input" type="text" id="login" name="login"/>
+                                </div>
+                                <div className="loginPage__inputWrap">
+                                    <label className="loginPage__label" htmlFor="senha">Senha</label> 
+                                    <input className="loginPage__input" type="password" id="senha" name="senha"/>
+                                </div>
+                                {(this.state.msgErro.length > 0)
+                                    ? <div className="loginPage__errorBox">
+                                        { this.state.msgErro }
+                                    </div>
+                                    : ''
+                                }
+                                <div className="loginPage__inputWrap">
+                                    <button className="loginPage__btnLogin" type="submit">
+                                        Logar
+                                    </button>
+                                </div>
+                            </form>
+                        </Widget>
+                    </div>
                 </div>
-            </div>
-        </Fragment>
-    )
+            </Fragment>
+        )
 
-    return (
-        <ComponenteAutenticado podeExibir={!isLogado} redirecionarPara="/" >
-            { pagina }
-        </ComponenteAutenticado>
-    )
+        return (
+            <ComponenteAutenticado podeExibir={!this.state.isLogado} redirecionarPara="/" >
+                { pagina }
+            </ComponenteAutenticado>
+        )
+    }
+    
 }
 
 export {Login}

@@ -14,7 +14,7 @@ import {
 import * as AutenticarService from '../../model/services/AutenticarService.js'
 import * as TweetsService from '../../model/services/TweetsService.js'
 
-import { Contexto as NotificacaoContexto } from '../../components/Notificacao/Notificacao.jsx'
+import { NotificacaoContext } from '../../components/Notificacao/Notificacao.jsx'
 
 function converteTweet(tweet) {
     return {
@@ -29,7 +29,7 @@ function converteTweet(tweet) {
 export function HomeSemAutenticacao() {
     const [ listaTweets, setListaTweets ] = useState([])
 
-    const { setMsg } = useContext(NotificacaoContexto)
+    const { setMsg } = useContext(NotificacaoContext)
 
     useEffect(() => {
         TweetsService.carrega()
